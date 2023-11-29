@@ -1,95 +1,42 @@
 import { DataGrid } from "@material-ui/data-grid";
+import axios from "axios";
+import { API_PATH } from "../../../../constants";
+import { useEffect, useState } from "react";
 
 const EmployeesTable = () => {
+  const [staff, setStaff] = useState([]);
+
   const columns = [
-    { field: "id", headerName: "Ф.И.О", width: 400 },
+    { field: "id", headerName: "ID", width: 400 },
     {
-      field: "all",
-      headerName: "Всего",
+      field: "full_name",
+      headerName: "Ф.И.О",
       width: 400,
       editable: true,
     },
     {
-      field: "done",
-      headerName: "Cделано",
+      field: "username",
+      headerName: "Username",
       width: 200,
       editable: true,
     },
     {
-      field: "waiting",
-      headerName: "B ожидании ",
+      field: "role",
+      headerName: "Role",
       width: 200,
       editable: true,
     },
   ];
-  const rows = [
-    {
-      id: "Махкамов Хумойун Давронович",
-      all: "100",
-      done: "80",
-      waiting: "20",
-    },
-    {
-      id: " Махкамов Хумойун Давронович2",
-      all: "100",
-      done: "80",
-      waiting: "20",
-    },
-    {
-      id: " Махкамов Хумойун Давронович3",
-      all: "100",
-      done: "80",
-      waiting: "20",
-    },
-    {
-      id: " Махкамов Хумойун Давронович4",
-      all: "100",
-      done: "80",
-      waiting: "20",
-    },
-    {
-      id: " Махкамов Хумойун Давронович5",
-      all: "100",
-      done: "80",
-      waiting: "20",
-    },
-    {
-      id: " Махкамов Хумойун Давронович6",
-      all: "100",
-      done: "80",
-      waiting: "20",
-    },
-    {
-      id: " Махкамов Хумойун Давронович7",
-      all: "100",
-      done: "80",
-      waiting: "20",
-    },
-    {
-      id: " Махкамов Хумойун Давронович8",
-      all: "100",
-      done: "80",
-      waiting: "20",
-    },
-    {
-      id: " Махкамов Хумойун Давронович9",
-      all: "100",
-      done: "80",
-      waiting: "20",
-    },
-    {
-      id: " Махкамов Хумойун Давронович0",
-      all: "100",
-      done: "80",
-      waiting: "20",
-    },
-    {
-      id: " Махкамов Хумойун Давронович1",
-      all: "100",
-      done: "80",
-      waiting: "20",
-    },
-  ];
+
+  const getStaff = () => {
+    axios.get(API_PATH + "/user/staff/").then((res) => {
+      setStaff(res.data);
+    });
+  };
+
+  useEffect(() => {
+    getStaff();
+  }, []);
 
   return (
     <div className="EmployeesTable TableStyle">
@@ -101,11 +48,11 @@ const EmployeesTable = () => {
         <div className="line"></div>
         <div style={{ height: 380, width: "100%" }}>
           <DataGrid
-            rows={rows}
+            rows={staff}
             columns={columns}
             pageSize={5}
             rowsPerPageOptions={[5]}
-            disableSelectionOnClick
+            // disableSelectionOnClick
           />
         </div>
       </div>

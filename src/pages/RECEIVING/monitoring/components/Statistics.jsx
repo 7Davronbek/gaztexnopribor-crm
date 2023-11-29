@@ -8,14 +8,29 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 const Statistics = () => {
   const [statistics, setStatistic] = useState([]);
-
+  const [btn, setBtn] = useState(1);
   useEffect(() => {
     const getStatistics = async () => {
-      const { data } = await axios.get(API_PATH + "/main/statictics/");
+      const { data } = await axios.get(
+        API_PATH +
+          `/main/statictics${
+            btn === 1
+              ? ""
+              : btn === 2
+              ? "?today=2"
+              : btn === 3
+              ? "?yesterday=3"
+              : btn === 4
+              ? "?week=4"
+              : btn === 5
+              ? "?month=6"
+              : "?year=6"
+          }`
+      );
       setStatistic(data);
     };
     getStatistics();
-  }, []);
+  }, [btn]);
 
   const data = {
     labels: [
@@ -71,12 +86,42 @@ const Statistics = () => {
     <div className="Statistics">
       <h1>Мониторинг</h1>
       <div className="filterWrap FilterStyle">
-        <div className="filterBtn">Все</div>
-        <div className="filterBtn active">Сегодня</div>
-        <div className="filterBtn">Вчера</div>
-        <div className="filterBtn">Неделя</div>
-        <div className="filterBtn">Месяц</div>
-        <div className="filterBtn">Год </div>
+        <div
+          onClick={() => setBtn(1)}
+          className={`filterBtn ${btn === 1 ? "active" : ""}`}
+        >
+          Все
+        </div>
+        <div
+          onClick={() => setBtn(2)}
+          className={`filterBtn ${btn === 3 ? "active" : ""}`}
+        >
+          Сегодня
+        </div>
+        <div
+          onClick={() => setBtn(3)}
+          className={`filterBtn ${btn === 4 ? "active" : ""}`}
+        >
+          Вчера
+        </div>
+        <div
+          onClick={() => setBtn(4)}
+          className={`filterBtn ${btn === 5 ? "active" : ""}`}
+        >
+          Неделя
+        </div>
+        <div
+          onClick={() => setBtn(5)}
+          className={`filterBtn ${btn === 5 ? "active" : ""}`}
+        >
+          Месяц
+        </div>
+        <div
+          onClick={() => setBtn(6)}
+          className={`filterBtn ${btn === 6 ? "active" : ""}`}
+        >
+          Год{" "}
+        </div>
       </div>
       <div className="cards CardStyle">
         <div className="cardsTop">

@@ -33,12 +33,12 @@ const App = () => {
 
           {userRole === "CLIENT" && (
             <>
-              {/* RECEIVING */}
+              {/* CLIENT */}
               <Route element={<ClientLayout />}>
                 <Route path="/client" element={<ClientPage1 />} />
                 <Route path="/client-2" element={<ClientPage1 />} />
               </Route>
-              {/* RECEIVING */}
+              {/* CLIENT */}
             </>
           )}
 
