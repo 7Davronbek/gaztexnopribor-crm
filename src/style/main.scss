@@ -1226,9 +1226,17 @@ body {
     .cards {
       background: #fff;
       width: 80%;
-      height: 80vh;
+      //height: 80vh;
       border-radius: 15px;
       z-index: 99;
+
+      .cardsWrap {
+        height: 60vh;
+      }
+
+      .btnWrap {
+        padding-bottom: 100px;
+      }
 
       .cardsTop {
         padding: 16px 24px;
