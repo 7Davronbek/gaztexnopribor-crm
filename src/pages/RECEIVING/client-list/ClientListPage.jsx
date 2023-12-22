@@ -31,6 +31,7 @@ const ClientListPage = () => {
   const [er_300000, setEr_300000] = useState("есть");
   const [visual_damage, setVisual_damage] = useState("есть");
   const [mechanical_damage, setMechanical_damage] = useState("есть");
+  const [inn, setInn] = useState("");
 
   const [conclusion, setConclusion] = useState("");
   const [indications, setIndications] = useState("");
@@ -78,6 +79,7 @@ const ClientListPage = () => {
           indications,
           counting_mechanism,
           phone,
+          inn,
         },
         CONFIG
       )
@@ -440,6 +442,18 @@ const ClientListPage = () => {
                   onChange={(e) => setCreatedTime(e.target.value)}
                   id="Дата"
                   type="datetime-local"
+                  className="form-control"
+                />
+              </div>
+
+              <div className="formWrap">
+                <label htmlFor="INN">INN</label>
+                <input
+                  required
+                  value={inn}
+                  onChange={(e) => setInn(e.target.value)}
+                  id="INN"
+                  type="text"
                   className="form-control"
                 />
               </div>

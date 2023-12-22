@@ -158,14 +158,14 @@ const ClientLayout = () => {
           </div>
 
           <div
-              className={`wrap ${
-                  client[0]?.status === "specialist_2" ||
-                  client[0]?.status === "test" ||
-                  client[0]?.status === "docs" ||
-                  client[0]?.status === "end"
-                      ? "active"
-                      : ""
-              }`}
+            className={`wrap ${
+              client[0]?.status === "specialist_2" ||
+              client[0]?.status === "test" ||
+              client[0]?.status === "docs" ||
+              client[0]?.status === "end"
+                ? "active"
+                : ""
+            }`}
           >
             <div className="iconWrap">
               <span className="icon icon-dot"></span>

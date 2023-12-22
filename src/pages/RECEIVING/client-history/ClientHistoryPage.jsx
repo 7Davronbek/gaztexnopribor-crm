@@ -4,6 +4,8 @@ import { API_PATH } from "@/constants";
 import { toast } from "react-toastify";
 import { Loader } from "@/components/Loader.jsx";
 import Paginator from "react-hooks-paginator";
+import downloadimage from "@/assets/download.svg";
+import pdf from "@/assets/pdf.svg";
 
 const ClientHistoryPage = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -365,6 +367,86 @@ const ClientHistoryPage = () => {
                 id="Счетного механизма:"
                 className="form-control"
               />
+            </div>
+            <div className="formWrap mt-5 pb-5">
+              <label htmlFor="Счетного механизма:">UzStandard Files:</label>
+              {order?.uaz_standard_files?.map((item2, index) => (
+                <div className="me-5" key={index}>
+                  <div className="mb-3">
+                    <p className={"mb-2 mt-2"}>
+                      <span className={"me-2"}>
+                        <img src={pdf} alt="" />
+                      </span>
+                      {item2?.file_1?.substring(
+                        item2?.file_1?.lastIndexOf("/") + 1,
+                        item2?.file_1?.lastIndexOf(".")
+                      )}
+                    </p>
+                    <a
+                      download
+                      href={item2?.file_1}
+                      rel="noreferrer"
+                      target={"_blank"}
+                      // onClick={download}
+                      className="btn"
+                    >
+                      <span>
+                        <img src={downloadimage} alt="" />
+                      </span>
+                      Скачать
+                    </a>
+                  </div>
+
+                  <div className={`mb-3 ${item2.file_2 ? "" : "d-none"}`}>
+                    <p className={"mb-2 mt-2"}>
+                      <span className={"me-2"}>
+                        <img src={pdf} alt="" />
+                      </span>
+                      {item2?.file_2?.substring(
+                        item2?.file_2?.lastIndexOf("/") + 1,
+                        item2?.file_2?.lastIndexOf(".")
+                      )}
+                    </p>
+                    <a
+                      download
+                      href={item2?.file_2}
+                      rel="noreferrer"
+                      target={"_blank"}
+                      // onClick={download}
+                      className="btn"
+                    >
+                      <span>
+                        <img src={downloadimage} alt="" />
+                      </span>
+                      Скачать
+                    </a>
+                  </div>
+                  <div className={`mb-3 ${item2.file_3 ? "" : "d-none"}`}>
+                    <p className={"mb-2 mt-2"}>
+                      <span className={"me-2"}>
+                        <img src={pdf} alt="" />
+                      </span>
+                      {item2?.file_3?.substring(
+                        item2?.file_3?.lastIndexOf("/") + 1,
+                        item2?.file_3?.lastIndexOf(".")
+                      )}
+                    </p>
+                    <a
+                      download
+                      href={item2?.file_3}
+                      rel="noreferrer"
+                      target={"_blank"}
+                      // onClick={download}
+                      className="btn"
+                    >
+                      <span>
+                        <img src={downloadimage} alt="" />
+                      </span>
+                      Скачать
+                    </a>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
