@@ -36,6 +36,14 @@ const AccountantLayout = () => {
                         >
                             <span className="icon icon-tools"></span>Запчасти
                         </Link>
+                        <Link
+                            className={`link ${
+                                location.pathname === "/accountant-history" && "active"
+                            }`}
+                            to="/accountant-history"
+                        >
+                            <span className="icon icon-tools"></span>История клиентов
+                        </Link>
                     </div>
                     <button onClick={logOut} className="btn"><span><img src={logout} alt=""/></span>Выход</button>
                 </div>

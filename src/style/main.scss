@@ -442,7 +442,61 @@ body {
   .ClientLayout {
     .left {
       padding: 28px 15px 28px 45px;
+      @media (max-width: 992px) {
+        display: none;
+      }
+      .wrap {
+        position: relative;
+        display: flex;
 
+        .line {
+          position: relative;
+          top: 20px;
+          left: -15px;
+          background: rgba(0, 0, 0, 0.75);
+          width: 1px;
+          height: 90px;
+          transition: all 0.3s ease-in-out;
+          margin-bottom: 22px;
+
+          &.h-105 {
+            height: 105px;
+          }
+        }
+
+        .icon-dot {
+          position: absolute;
+          left: -18px;
+          top: 6px;
+          transition: all 0.3s ease-in-out;
+        }
+
+        &.active {
+          h3 {
+            color: rgba(0, 0, 0, 0.7);
+          }
+
+          h4 {
+            color: rgba(0, 0, 0, 0.75);
+          }
+
+          .icon-dot {
+            background: #ff6e2e;
+          }
+
+          .line {
+            background: #ff6e2e;
+          }
+        }
+      }
+    }
+    
+    .left2 {
+      padding: 28px 15px 28px 45px;
+      display: none;
+      @media (max-width: 576px) {
+        display: initial;
+      }
       .wrap {
         position: relative;
         display: flex;
@@ -607,6 +661,12 @@ body {
     align-items: center;
     justify-content: end;
 
+    .bell {
+      @media (max-width: 576px) {
+        display: none;
+      }
+    }
+
     .inputWrap {
       display: flex;
       align-items: center;
@@ -614,6 +674,9 @@ body {
       background: var(--black-5, rgba(28, 28, 28, 0.05));
       padding: 4px 8px;
       margin-right: 16px;
+      @media (max-width: 576px) {
+        display: none;
+      }
 
       input {
         color: var(--black-20, rgba(0, 0, 0));
@@ -627,6 +690,16 @@ body {
         box-shadow: none !important;
         padding-left: 7px;
         padding-top: 8px;
+      }
+    }
+    .menu_bar_icon {
+      display: none;
+      @media (max-width: 576px) {
+        width: 100%;
+        display: initial;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
       }
     }
   }
@@ -1027,7 +1100,6 @@ body {
         border-radius: 6px !important;
         background: #ececec;
         box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.02);
-
       }
     }
 
@@ -1077,7 +1149,6 @@ body {
   }
 
   .ClientPayme {
-
     .payme_box {
       margin: auto !important;
       padding-top: 60px;

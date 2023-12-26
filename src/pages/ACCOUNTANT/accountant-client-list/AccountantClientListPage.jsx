@@ -113,7 +113,10 @@ const AccountantClientListPage = () => {
                     >
                       <th>{item.id}</th>
                       <th>{item.name_org}</th>
-                      <th>{item.created_at}</th>
+                      <th>
+                        {item.created_time.slice(0, 10)}{" "}
+                        {item.created_time.slice(11, 15)}
+                      </th>
                       <th>{item.meter_brand}</th>
                       <th>{item.serial_number}</th>
                       <th>№ {item.temp_sensor}</th>
@@ -153,11 +156,11 @@ const AccountantClientListPage = () => {
                 <div className="topWrap">
                   <div className="d-flex align-items-center">
                     <div className="wrap me-5">
-                      <h2>Зав.№ сч</h2>
+                      <h2>Зав.№ cчетчик</h2>
                       <h3>№ {order?.serial_number}</h3>
                     </div>
                     <div className="wrap">
-                      <h2>Зав.№ сч</h2>
+                      <h2>Зав.№ корректор</h2>
                       <h3>№ {order?.temp_sensor}</h3>
                     </div>
                   </div>

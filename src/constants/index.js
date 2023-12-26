@@ -10,6 +10,7 @@ export const CONFIG = {
     Authorization: `Token ${localStorage.getItem(TOKEN)}`,
   },
 };
+
 export const IMAGE_CONFIG = {
   headers: {
     Accept: "application/json",

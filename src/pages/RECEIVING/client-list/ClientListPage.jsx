@@ -450,6 +450,8 @@ const ClientListPage = () => {
                 <label htmlFor="INN">INN</label>
                 <input
                   required
+                  maxLength={9}
+                  minLength={9}
                   value={inn}
                   onChange={(e) => setInn(e.target.value)}
                   id="INN"
