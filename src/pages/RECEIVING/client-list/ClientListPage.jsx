@@ -180,6 +180,9 @@ const ClientListPage = () => {
     if (conclusion.length > 1) {
       formData.append("conclusion", conclusion);
     }
+    if (inn.length > 1) {
+      formData.append("inn", inn);
+    }
     if (indications.length > 1) {
       formData.append("indications", indications);
     }
@@ -781,6 +784,18 @@ const ClientListPage = () => {
                   id="Дата"
                   type="text"
                   disabled
+                  className="form-control"
+                />
+              </div>
+              <div className="formWrap">
+                <label htmlFor="INN">INN</label>
+                <input
+                  maxLength={9}
+                  minLength={9}
+                  defaultValue={singleOrder?.inn}
+                  onChange={(e) => setInn(e.target.value)}
+                  id="INN"
+                  type="text"
                   className="form-control"
                 />
               </div>

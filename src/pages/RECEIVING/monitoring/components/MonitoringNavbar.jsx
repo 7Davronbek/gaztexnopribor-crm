@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 const MonitoringNavbar = () => {
   var [date, setDate] = useState(new Date());
-
+  const [name, setName] = useState(localStorage.getItem("ismi") || "");
   useEffect(() => {
     var timer = setInterval(() => setDate(new Date()), 1000);
     return function cleanup() {
@@ -14,6 +14,9 @@ const MonitoringNavbar = () => {
   return (
     <>
       <div className="MonitoringNavbar">
+        <div className="me-3">
+          <h5>{name}</h5>
+        </div>
         <div className="local_time me-3">
           <h5>{date.toLocaleTimeString()}</h5>
         </div>

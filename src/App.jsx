@@ -39,6 +39,7 @@ import DocumentationPage from "./pages/RECEIVING/docs/DocumentationPage";
 import ClientPaymeParol from "./pages/CLIENT/ClientPaymeParol";
 import ClientPayme from "./pages/CLIENT/ClientPayme";
 import AccountantHistory from "./pages/ACCOUNTANT/AccountantHistory";
+import Incpector2sLayout from "./components/Incpector2sLayout";
 
 const App = () => {
   const { userRole } = useSelector((state) => state.auth);
@@ -159,7 +160,7 @@ const App = () => {
           {userRole === "INSPECTOR_2" && (
             <>
               {/* INSPECTOR_2 */}
-              <Route element={<IncpectorsLayout />}>
+              <Route element={<Incpector2sLayout />}>
                 <Route path="/inspector_2" element={<Inspector2Page />} />
               </Route>
               {/* INSPECTOR_2 */}

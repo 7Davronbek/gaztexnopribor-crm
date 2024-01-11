@@ -35,7 +35,7 @@ const Main = () => {
 
         localStorage.setItem(TOKEN, extractedValue);
         localStorage.setItem(USER_ROLE, res.data.role.toUpperCase());
-
+        localStorage.setItem("ismi", res?.data?.name);
         // dispatch(setToken({ extractedValue }));
 
         if (res.data.role === "receiver") {

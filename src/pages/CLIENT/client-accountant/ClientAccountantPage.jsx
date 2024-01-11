@@ -27,6 +27,7 @@ const ClientAccountantPage = () => {
   const contentArea = useRef(null);
 
   const nav = useNavigate();
+  const [agre, setAgre] = useState(false);
   const patchStatus = () => {
     setPayment(true);
     // await axios
@@ -38,6 +39,19 @@ const ClientAccountantPage = () => {
     //     toast.error("Error with payment:", error);
     //   });
   };
+  const patchStatus2 = () => {
+    axios
+      .patch(API_PATH + `/main/update-spcialist-2/${order[0].id}/`, {
+        status: "accountant",
+      })
+      .then(() => {
+        toast("Скоро рассмотрю!");
+      })
+      .catch((error) => {
+        toast.error("Error with payment:", error);
+      });
+  };
+  
   const sendToPayme = () => {
     localStorage.setItem("amount", order[0]?.get_full_amount * 1.12);
     localStorage.setItem("order_id", order[0]?.id);
@@ -56,7 +70,11 @@ const ClientAccountantPage = () => {
 
   return (
     <>
-      <div className={`ClientAccountantPage ${payment ? "d-none" : ""}`}>
+      <div
+        className={`ClientAccountantPage ${payment ? "d-none" : ""} ${
+          agre ? "d-none" : ""
+        }`}
+      >
         <div className={`myModal middleModal accountantModal active"}`}>
           <div className="cards">
             <div className="cardsTop border-0">
@@ -165,7 +183,10 @@ const ClientAccountantPage = () => {
               </div>
             </PDFExport>
             <div className="btnWrap">
-              <button className="btn cardsBtn silver d-block w-50">
+              <button
+                onClick={() => patchStatus2()}
+                className="btn cardsBtn silver d-block w-50"
+              >
                 Hе согласится, отправить к принимающему
               </button>
               <button

@@ -55,7 +55,7 @@ const AccountantHistory = () => {
   return (
     <>
       <div className="AccountantClientListPage RightStyle">
-        <h1>Список клиентов</h1>
+        <h1>История клиентов</h1>
 
         {isLoading ? (
           <Loader />
