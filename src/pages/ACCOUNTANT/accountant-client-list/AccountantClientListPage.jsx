@@ -13,6 +13,7 @@ const AccountantClientListPage = () => {
   const [order, setOrder] = useState();
   const [btn, setBtn] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
+  const [sear, setSear] = useState("");
 
   const pdfExportComponent = useRef(null);
   const [layoutSelection, setLayoutSelection] = useState({
@@ -24,11 +25,11 @@ const AccountantClientListPage = () => {
     pdfExportComponent.current.save();
   };
 
-  const getOrders = useCallback(async () => {
+  const getOrders = () => {
     setIsLoading(true);
-    await axios(
+    axios(
       API_PATH +
-        `/main/accountant${
+        `/main/accountant?name=${sear}${
           btn === 1 ? "" : btn === 2 ? "?tady=1" : "?yesterday=28"
         }`
     )
@@ -39,11 +40,11 @@ const AccountantClientListPage = () => {
       .finally(() => {
         setIsLoading(false);
       });
-  }, [btn]);
+  };
 
   useEffect(() => {
     getOrders();
-  }, [getOrders]);
+  }, [btn, sear]);
 
   const sendAccountant = (item_id) => {
     axios
@@ -60,7 +61,19 @@ const AccountantClientListPage = () => {
   return (
     <>
       <div className="AccountantClientListPage RightStyle">
-        <h1>Список клиентов</h1>
+        <div className="d-flex align-items-center justify-content-between">
+          <h1>Список клиентов</h1>
+          <div className="inputWrap me-5">
+            <div className="search">{/* <img src={search} alt="" /> */}</div>
+            <input
+              value={sear}
+              onChange={(e) => setSear(e.target.value)}
+              type="text"
+              placeholder="Поиск"
+              className="form-control"
+            />
+          </div>
+        </div>
 
         {isLoading ? (
           <Loader />
@@ -93,6 +106,7 @@ const AccountantClientListPage = () => {
                 <tr>
                   <td>№</td>
                   <td>Наименование организации</td>
+                  <td>INN</td>
                   <td>Дата</td>
                   <td>Марка счетчика газа</td>
                   <td>Зав.№ сч</td>
@@ -113,6 +127,7 @@ const AccountantClientListPage = () => {
                     >
                       <th>{item.id}</th>
                       <th>{item.name_org}</th>
+                      <th>{item?.inn}</th>
                       <th>
                         {item.created_time.slice(0, 10)}{" "}
                         {item.created_time.slice(11, 15)}

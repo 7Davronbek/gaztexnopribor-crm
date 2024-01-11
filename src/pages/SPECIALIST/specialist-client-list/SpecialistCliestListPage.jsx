@@ -7,6 +7,7 @@ import { Loader } from "@/components/Loader.jsx";
 
 const SpecialistCliestListPage = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [sear, setSear] = useState("");
   const [btn, setBtn] = useState(1);
   const [orders, setOrders] = useState([]);
   // const [products, setProducts] = useState([]);
@@ -24,7 +25,7 @@ const SpecialistCliestListPage = () => {
   const getOrders = async () => {
     const { data } = await axios(
       API_PATH +
-        `/main/orders-specialist${
+        `/main/orders-specialist?name=${sear}${
           btn === 1
             ? ""
             : btn === 2
@@ -44,7 +45,7 @@ const SpecialistCliestListPage = () => {
   useEffect(() => {
     getOrders();
     getProducts();
-  }, [btn]);
+  }, [btn, sear]);
 
   const getOrder = (item) => {
     setOrder(item);
@@ -125,45 +126,56 @@ const SpecialistCliestListPage = () => {
       <div className="SpecialistCliestListPage RightStyle">
         <h1>Список клиентов</h1>
         <>
-          <div className="filterWrap FilterStyle">
-            <div
-              onClick={() => setBtn(1)}
-              className={`filterBtn ${btn === 1 ? "active" : ""}`}
-            >
-              Все
+          <div className="d-flex justify-content-between align-items-center">
+            <div className="filterWrap FilterStyle">
+              <div
+                onClick={() => setBtn(1)}
+                className={`filterBtn ${btn === 1 ? "active" : ""}`}
+              >
+                Все
+              </div>
+              <div
+                onClick={() => setBtn(2)}
+                className={`filterBtn ${btn === 2 ? "active" : ""}`}
+              >
+                Сегодня
+              </div>
+              <div
+                onClick={() => setBtn(3)}
+                className={`filterBtn ${btn === 3 ? "active" : ""}`}
+              >
+                Вчера
+              </div>
+              <div
+                onClick={() => setBtn(4)}
+                className={`filterBtn ${btn === 4 ? "active" : ""}`}
+              >
+                Неделя
+              </div>
+              <div
+                onClick={() => setBtn(5)}
+                className={`filterBtn ${btn === 5 ? "active" : ""}`}
+              >
+                Месяц
+              </div>
+              <div
+                onClick={() => setBtn(6)}
+                className={`filterBtn ${btn === 6 ? "active" : ""}`}
+              >
+                Год
+              </div>
             </div>
-            <div
-              onClick={() => setBtn(2)}
-              className={`filterBtn ${btn === 2 ? "active" : ""}`}
-            >
-              Сегодня
-            </div>
-            <div
-              onClick={() => setBtn(3)}
-              className={`filterBtn ${btn === 3 ? "active" : ""}`}
-            >
-              Вчера
-            </div>
-            <div
-              onClick={() => setBtn(4)}
-              className={`filterBtn ${btn === 4 ? "active" : ""}`}
-            >
-              Неделя
-            </div>
-            <div
-              onClick={() => setBtn(5)}
-              className={`filterBtn ${btn === 5 ? "active" : ""}`}
-            >
-              Месяц
-            </div>
-            <div
-              onClick={() => setBtn(6)}
-              className={`filterBtn ${btn === 6 ? "active" : ""}`}
-            >
-              Год
+            <div className="inputWrap m-3">
+              <div className="search">{/* <img src={search} alt="" /> */}</div>
+              <input
+                value={sear}
+                onChange={(e) => setSear(e.target.value)}
+                type="text"
+                placeholder="Поиск"
+                className="form-control"
+              />
             </div>
           </div>
-
           {isLoading ? (
             <Loader />
           ) : (
@@ -172,6 +184,7 @@ const SpecialistCliestListPage = () => {
                 <tr>
                   <td>№</td>
                   <td>Наименование организации</td>
+                  <td>INN</td>
                   <td>Дата</td>
                   <td>Марка счетчика газа</td>
                   <td>Заводские номера</td>
@@ -190,6 +203,7 @@ const SpecialistCliestListPage = () => {
                     >
                       <th>{item.id}</th>
                       <th>{item.name_org}</th>
+                      <th>{item?.inn}</th>
                       <th>
                         {item.created_time.slice(0, 10)}{" "}
                         {item.created_time.slice(11, 16)}

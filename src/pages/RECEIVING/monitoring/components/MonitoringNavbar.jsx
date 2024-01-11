@@ -20,12 +20,12 @@ const MonitoringNavbar = () => {
         <div className="local_time me-3">
           <h5>{date.toLocaleTimeString()}</h5>
         </div>
-        <div className="inputWrap">
+        {/* <div className="inputWrap">
           <div className="search">
             <img src={search} alt="" />
           </div>
           <input type="text" placeholder="Поиск" className="form-control" />
-        </div>
+        </div> */}
         <div className="bell">
           <img src={bell} alt="" />
         </div>

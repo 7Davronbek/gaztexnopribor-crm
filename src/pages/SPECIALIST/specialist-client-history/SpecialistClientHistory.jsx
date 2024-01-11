@@ -9,30 +9,26 @@ const SpecialistClientHistory = () => {
   const [order, setOrder] = useState({});
   const [isOpen, setIsOpen] = useState(false);
   const [orders, setOrders] = useState([]);
-
+  const [sear, setSear] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [currentData, setCurrentData] = useState([]);
   const [offset, setOffset] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const getOrders = useCallback(async () => {
-    try {
-      setIsLoading(true);
-      const { data } = await axios(API_PATH + `/main/orders-history/`);
-      setOrders(data);
+  const getOrders = () => {
+    setIsLoading(true);
+    axios.get(API_PATH + `/main/orders-history?name=${sear}`).then((res) => {
+      setOrders(res.data);
       setIsLoading(false);
-    } catch (error) {
-      toast.error("Error getting orders:", error);
-      setIsLoading(false);
-    }
-  }, []);
+    });
+  };
 
   useEffect(() => {
     getOrders();
-  }, [getOrders]);
+  }, [sear]);
 
   useEffect(() => {
-    setCurrentData(orders.slice(offset, offset + 6));
+    setCurrentData(orders.slice(offset, offset + 15));
   }, [offset, orders]);
 
   const getOrder = (item) => {
@@ -42,7 +38,20 @@ const SpecialistClientHistory = () => {
   return (
     <>
       <div className="SpecialistCliestListPage RightStyle">
-        <h1>Список клиентов</h1>
+        <div className="d-flex align-items-center justify-content-between">
+          <h1>Список клиентов</h1>
+
+          <div className="inputWrap me-5">
+            <div className="search">{/* <img src={search} alt="" /> */}</div>
+            <input
+              value={sear}
+              onChange={(e) => setSear(e.target.value)}
+              type="text"
+              placeholder="Поиск"
+              className="form-control"
+            />
+          </div>
+        </div>
 
         {isLoading ? (
           <Loader />

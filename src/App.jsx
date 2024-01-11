@@ -40,6 +40,7 @@ import ClientPaymeParol from "./pages/CLIENT/ClientPaymeParol";
 import ClientPayme from "./pages/CLIENT/ClientPayme";
 import AccountantHistory from "./pages/ACCOUNTANT/AccountantHistory";
 import Incpector2sLayout from "./components/Incpector2sLayout";
+import Qrcode from "./pages/Qrcode";
 
 const App = () => {
   const { userRole } = useSelector((state) => state.auth);
@@ -50,6 +51,7 @@ const App = () => {
           <Route path="/" element={<Main />} />
           <Route path="/client-payme" element={<ClientPayme />} />
           <Route path="/client-payme-parol" element={<ClientPaymeParol />} />
+          <Route path="/qr-code-regen/:id" element={<Qrcode />} />
           {userRole === "CLIENT" && (
             <>
               {/* CLIENT */}

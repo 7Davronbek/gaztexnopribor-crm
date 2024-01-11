@@ -9,7 +9,7 @@ const Inspector2Page = () => {
   const [btn, setBtn] = useState(1);
   const [orders, setOrders] = useState([]);
   const [order, setOrder] = useState({});
-
+  const [sear, setSear] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const getOrders = useCallback(async () => {
@@ -17,7 +17,7 @@ const Inspector2Page = () => {
     try {
       const { data } = await axios(
         API_PATH +
-          `/main/inspector2-order-list${
+          `/main/inspector2-order-list?name=${sear}${
             btn === 1 ? "" : btn === 2 ? "?tady=1" : "?yesterday=28"
           }`
       );
@@ -27,7 +27,7 @@ const Inspector2Page = () => {
       toast.error("Error getting orders:", error);
       setIsLoading(false);
     }
-  }, [btn]);
+  }, [btn, sear]);
 
   useEffect(() => {
     getOrders();
@@ -49,7 +49,19 @@ const Inspector2Page = () => {
   return (
     <>
       <div className="SpecialistCliestListPage RightStyle">
-        <h1>Список клиентов</h1>
+        <div className="d-flex align-items-center justify-content-between">
+          <h1>Список клиентов</h1>
+          <div className="inputWrap">
+            <div className="search">{/* <img src={search} alt="" /> */}</div>
+            <input
+              value={sear}
+              onChange={(e) => setSear(e.target.value)}
+              type="text"
+              placeholder="Поиск"
+              className="form-control"
+            />
+          </div>
+        </div>
         <div className="filterWrap FilterStyle">
           <div
             onClick={() => setBtn(1)}

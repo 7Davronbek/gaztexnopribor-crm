@@ -9,19 +9,21 @@ const StenClientList = () => {
   const [orders, setOrders] = useState([]);
   // const [products, setProducts] = useState([]);
   const [order, setOrder] = useState({});
+  const [sear, setSear] = useState("");
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const getOrders = async () => {
+  const getOrders = () => {
     setIsLoading(true);
-    const { data } = await axios(API_PATH + `/main/stend-list/`);
-    setOrders(data);
-    setIsLoading(false);
+    axios(API_PATH + `/main/stend-list?name=${sear}`).then((res) => {
+      setOrders(res.data);
+      setIsLoading(false);
+    });
   };
 
   useEffect(() => {
     getOrders();
-  }, []);
+  }, [sear]);
 
   const getOrder = (item) => {
     setOrder(item);
@@ -46,7 +48,19 @@ const StenClientList = () => {
   return (
     <>
       <div className="SpecialistCliestListPage RightStyle">
-        <h1>Список клиентов</h1>
+        <div className="d-flex align-items-center justify-content-between">
+          <h1>Список клиентов</h1>
+          <div className="inputWrap">
+            <div className="search">{/* <img src={search} alt="" /> */}</div>
+            <input
+              value={sear}
+              onChange={(e) => setSear(e.target.value)}
+              type="text"
+              placeholder="Поиск"
+              className="form-control"
+            />
+          </div>
+        </div>
         <>
           {isLoading ? (
             <Loader />
@@ -56,6 +70,7 @@ const StenClientList = () => {
                 <tr>
                   <td>№</td>
                   <td>Наименование организации</td>
+                  <td>INN</td>
                   <td>Дата</td>
                   <td>Марка счетчика газа</td>
                   <td>Заводские номера</td>
@@ -74,6 +89,7 @@ const StenClientList = () => {
                     >
                       <th>{item.id}</th>
                       <th>{item.name_org}</th>
+                      <th>{item?.inn}</th>
                       <th>{item.created_time}</th>
                       <th>{item.meter_brand}</th>
                       <th>{item.serial_number}</th>

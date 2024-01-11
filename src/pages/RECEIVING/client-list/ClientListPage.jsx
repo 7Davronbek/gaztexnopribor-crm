@@ -2,22 +2,24 @@ import plus from "@/assets/plus.svg";
 import document from "@/assets/document.svg";
 // import {DataGrid} from "@material-ui/data-grid";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { API_PATH } from "@/constants";
 import { CONFIG } from "../../../constants";
 import { toast } from "react-toastify";
 import { Loader } from "@/components/Loader.jsx";
+import downloadimage from "@/assets/download.svg";
+import React from "react";
+import QRCode from "react-qr-code";
 
 const ClientListPage = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
-
+  const [sear, setSear] = useState("");
   const [name_org, setNameOrg] = useState("");
   const [created_time, setCreatedTime] = useState("");
   const [meter_brand, setMeterBrand] = useState("");
   const [serial_number, setSerialNumber] = useState("");
   const [temp_sensor, setTemp_sensor] = useState("");
-
   const [latest_certificate, setLatestCertificate] = useState("есть");
   const [passport_meter, setPassportMeter] = useState("есть");
   const [correction_block_passport, setCorrectionBlockPassport] =
@@ -49,6 +51,22 @@ const ClientListPage = () => {
   const [btn, setBtn] = useState(1);
   const [orders, setOrders] = useState([]);
   const [singleOrder, setSingleOrder] = useState();
+
+  // dwad
+  let qrCodeRef = React.createRef();
+
+  const downloadQRCode = () => {
+    const canvas = qrCodeRef.current.querySelector("canvas");
+    const pngUrl = canvas
+      .toDataURL("image/png")
+      .replace("image/png", "image/octet-stream");
+    let downloadLink = document.createElement("a");
+    downloadLink.href = pngUrl;
+    downloadLink.download = "QRCode.png";
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+  };
 
   const addClient = () => {
     setIsLoading(true);
@@ -85,6 +103,7 @@ const ClientListPage = () => {
       )
       .then((res) => {
         const orderId = res?.data?.id;
+
         if (
           image.length !== 0 ||
           image1.length !== 0 ||
@@ -269,7 +288,7 @@ const ClientListPage = () => {
     setIsOrder(true);
     const { data } = await axios.get(
       API_PATH +
-        `/main/orders/${
+        `/main/orders/?name=${sear}${
           btn === 1 ? "" : btn === 2 ? "?today=2" : "?yesterday=3"
         }`
     );
@@ -286,7 +305,7 @@ const ClientListPage = () => {
 
   useEffect(() => {
     getOrders();
-  }, [btn]);
+  }, [btn, sear]);
 
   const changeStatus = (pk) => {
     axios
@@ -305,12 +324,24 @@ const ClientListPage = () => {
       <div className="ClientListPage RightStyle">
         <div className="btnWrap">
           <h1>Список клиентов</h1>
-          <button onClick={() => setIsOpen(true)} className="btn myBtn">
-            <span>
-              <img src={plus} alt="" />
-            </span>
-            Добавить клиент
-          </button>
+          <div className="d-flex align-items-center ">
+            <div className="inputWrap me-5">
+              <div className="search">{/* <img src={search} alt="" /> */}</div>
+              <input
+                value={sear}
+                onChange={(e) => setSear(e.target.value)}
+                type="text"
+                placeholder="Поиск"
+                className="form-control"
+              />
+            </div>
+            <button onClick={() => setIsOpen(true)} className="btn myBtn">
+              <span>
+                <img src={plus} alt="" />
+              </span>
+              Добавить клиент
+            </button>
+          </div>
         </div>
 
         <div className="filterWrap FilterStyle">
@@ -345,10 +376,12 @@ const ClientListPage = () => {
                   <tr>
                     <td>№</td>
                     <td>Наименование организации</td>
+                    <td>INN</td>
                     <td>Дата</td>
                     <td>Марка счетчика газа</td>
                     <td>Заводские номера</td>
                     <td>Статус</td>
+                    {/* <td>QrCode</td> */}
                   </tr>
                 </thead>
                 <tbody>
@@ -363,6 +396,7 @@ const ClientListPage = () => {
                       >
                         <th>{index + 1}</th>
                         <th>{item.name_org}</th>
+                        <th>{item.inn}</th>
                         <th>
                           {item.created_time.slice(0, 10)} -{" "}
                           {item.created_time.slice(11, 16)}
@@ -400,6 +434,15 @@ const ClientListPage = () => {
                             ? "Тест"
                             : "Специалист"}
                         </th>
+                        {/* <th>
+                          <QRCode id="qrCodeEl" size={150} value="mahkam.uz" />
+                          <input
+                            type="button"
+                            className="download-btn"
+                            value="Download"
+                            onClick={downloadQRCode}
+                          />
+                        </th> */}
                       </tr>
                     ))}
                 </tbody>

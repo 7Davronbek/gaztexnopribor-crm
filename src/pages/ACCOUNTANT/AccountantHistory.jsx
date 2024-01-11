@@ -13,6 +13,7 @@ const AccountantHistory = () => {
   const [order, setOrder] = useState();
   const [btn, setBtn] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
+  const [sear, setSear] = useState("");
 
   const pdfExportComponent = useRef(null);
   const [layoutSelection, setLayoutSelection] = useState({
@@ -26,7 +27,7 @@ const AccountantHistory = () => {
 
   const getOrders = useCallback(async () => {
     setIsLoading(true);
-    await axios(API_PATH + `/main/accountant-history/`)
+    await axios(API_PATH + `/main/accountant-history?name=${sear}`)
       .then((res) => {
         setOrders(res.data);
         setIsLoading(false);
@@ -34,7 +35,7 @@ const AccountantHistory = () => {
       .finally(() => {
         setIsLoading(false);
       });
-  }, []);
+  }, [sear]);
 
   useEffect(() => {
     getOrders();
@@ -55,7 +56,19 @@ const AccountantHistory = () => {
   return (
     <>
       <div className="AccountantClientListPage RightStyle">
-        <h1>История клиентов</h1>
+        <div className="d-flex align-items-center justify-content-between">
+          <h1>Список клиентов</h1>
+          <div className="inputWrap me-5">
+            <div className="search">{/* <img src={search} alt="" /> */}</div>
+            <input
+              value={sear}
+              onChange={(e) => setSear(e.target.value)}
+              type="text"
+              placeholder="Поиск"
+              className="form-control"
+            />
+          </div>
+        </div>
 
         {isLoading ? (
           <Loader />
@@ -88,6 +101,7 @@ const AccountantHistory = () => {
                 <tr>
                   <td>№</td>
                   <td>Наименование организации</td>
+                  <td>INN</td>
                   <td>Дата</td>
                   <td>Марка счетчика газа</td>
                   <td>Зав.№ сч</td>
@@ -108,6 +122,7 @@ const AccountantHistory = () => {
                     >
                       <th>{item.id}</th>
                       <th>{item.name_org}</th>
+                      <th>{item?.inn}</th>
                       <th>
                         {item.created_time.slice(0, 10)}{" "}
                         {item.created_time.slice(11, 15)}
